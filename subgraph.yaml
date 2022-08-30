@@ -1,0 +1,38 @@
+specVersion: 0.0.1
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: CrazyPandaNFT
+    network: rinkeby
+    source:
+      address: "0x34A8B210F23AEA4FBd42Fe7B0a9C750CE0fc49F7"
+      abi: CrazyPandaNFT
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - Approval
+        - ApprovalForAll
+        - Initialized
+        - LayPanda
+        - OwnershipTransferred
+        - Transfer
+      abis:
+        - name: CrazyPandaNFT
+          file: ./abis/CrazyPandaNFT.json
+      eventHandlers:
+        - event: Approval(indexed address,indexed address,indexed uint256)
+          handler: handleApproval
+        - event: ApprovalForAll(indexed address,indexed address,bool)
+          handler: handleApprovalForAll
+        - event: Initialized(uint8)
+          handler: handleInitialized
+        - event: LayPanda(indexed uint256,address,uint256)
+          handler: handleLayPanda
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+        - event: Transfer(indexed address,indexed address,indexed uint256)
+          handler: handleTransfer
+      file: ./src/crazy-panda-nft.ts
